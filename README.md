@@ -16,13 +16,19 @@ MagicArray is a TypeScript library designed to provide extensive array manipulat
 Install MagicArray using npm:
 
 ```bash
-npm install magic-array
+npm install magicarray
 ```
 
 Or using yarn:
 
 ```bash
-yarn add magic-array
+yarn add magicarray
+```
+
+## Usage
+
+``` typescript
+import createMagicArray  from 'magicarray';
 ```
 
 ## Features
@@ -34,6 +40,8 @@ yarn add magic-array
 - **Batch Operations**: Conduct batch operations like batch push.
 
 ## Array Methods
+
+MagicArray supports all standard JavaScript array methods, enhancing them with additional capabilities.
 
 ### Custom Methods
 

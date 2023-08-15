@@ -1,5 +1,5 @@
 {
-    "name": "magic-array",
+    "name": "magicarray",
     "version": "1.0.0",
     "description": "Adds a ton of actually useful methods to an Array, because it's worth it.",
     "main": "dist/index.js",
