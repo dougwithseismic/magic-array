@@ -287,9 +287,9 @@ Managing game states and allowing players to undo and redo actions:
 
 ```typescript
 const gameState = createMagicArray<Game>();
-gameState.magicArray.history.saveCheckpoint('level-1');
+gameState.history.saveCheckpoint('level-1');
 // Player makes moves...
-gameState.magicArray.history.undo(); // Undo last move
+gameState.history.undo(); // Undo last move
 ```
 
 ### For Task Management
@@ -302,9 +302,9 @@ tasks.batchPush([
   { title: 'Write code', status: 'done' },
   { title: 'Write tests', status: 'in-progress' }
 ]);
-tasks.magicArray.history.saveCheckpoint('initial-tasks');
+tasks.history.saveCheckpoint('initial-tasks');
 tasks.search(task => task.status === 'in-progress'); // Search tasks in progress
-tasks.magicArray.history.undo(); // Undo the last change
+tasks.history.undo(); // Undo the last change
 ```
 
 ### For User Profile Management
@@ -315,9 +315,9 @@ Handling user profiles and tracking changes, making it easy to revert to previou
 const users = createMagicArray<UserProfile>();
 users.setValidation(user => user.age > 18); // Validate user's age
 users.batchPush(newUserProfiles);
-users.magicArray.history.saveCheckpoint('after-new-users');
+users.history.saveCheckpoint('after-new-users');
 // Make updates...
-users.magicArray.history.restoreCheckpoint('after-new-users'); // Restore to previous state
+users.history.restoreCheckpoint('after-new-users'); // Restore to previous state
 ```
 
 ### For Shopping Cart Management
@@ -328,9 +328,9 @@ Manipulating shopping cart items, searching for products, and maintaining histor
 const cart = createMagicArray<Product>();
 cart.batchPush(selectedProducts);
 cart.search(product => product.category === 'electronics'); // Search for electronics
-cart.magicArray.history.saveCheckpoint('after-adding-electronics');
+cart.history.saveCheckpoint('after-adding-electronics');
 // Remove some items...
-cart.magicArray.history.restoreCheckpoint('after-adding-electronics'); // Restore to previous state
+cart.history.restoreCheckpoint('after-adding-electronics'); // Restore to previous state
 ```
 
 ### For Timeline Creation in Social Media
@@ -363,9 +363,9 @@ Saving and restoring configurations:
 
 ```typescript
 const config = createMagicArray<Config>();
-config.magicArray.history.saveCheckpoint('stable');
+config.history.saveCheckpoint('stable');
 // Make changes...
-config.magicArray.history.restoreCheckpoint('stable'); // Restore to stable
+config.history.restoreCheckpoint('stable'); // Restore to stable
 ```
 
 ### Obstacle Avoidance and Path Planning for Drone Swarms
