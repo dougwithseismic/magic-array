@@ -1,187 +1,394 @@
-# dougwithseismic/template-ts-npm-package
+# MagicArray
 
-![GitHub Badge](https://img.shields.io/github/stars/dougwithseismic/template-ts-npm-package?style=social&label=Star)
+MagicArray is a TypeScript library designed to provide extensive array manipulation features, extending the traditional array functionality with added operations and validation support. It comes with a unique history tracking system and enables an extra level of validation and manipulation for array data structures.
 
-A robust starting point for building npm packages with TypeScript support, and `esbuild` for rapidfire scaffolding.
+## Table of Contents
+
+1. [Installation](#installation)
+2. [Features](#features)
+3. [Array Methods](#array-methods)
+4. [History Actions](#history-actions)
+5. [Usage Examples](#usage-examples)
+6. [License](#license)
+
+## Installation
+
+Install MagicArray using npm:
+
+```bash
+npm install magic-array
+```
+
+Or using yarn:
+
+```bash
+yarn add magic-array
+```
 
 ## Features
 
-- 🚀 Fast builds with [esbuild](https://esbuild.github.io/)
-- 🦾 TypeScript support with type declarations
-- 🚦 Ready-to-use scripts for development and building
-- 🧪 Testing setup with Jest
-- 📜 Linting with ESLint
-- 🔄 Watch mode for development with nodemon and concurrently
+- **Array Manipulation**: Perform standard and custom array operations.
+- **Validation Support**: Enforce rules with validation functions.
+- **Serialization and Deserialization**: Easily convert arrays to JSON strings and back.
+- **History Tracking**: Track changes, undo, redo, save checkpoints, and navigate history.
+- **Batch Operations**: Conduct batch operations like batch push.
 
-## Getting Started
+## Array Methods
 
-1. **Clone the repository**:
+### Custom Methods
 
-   ```bash
-   git clone https://github.com/dougwithseismic/template-ts-npm-package.git your-package-name
-   ```
+#### `batchPush(itemsToPush: T[]): void`
 
-2. **Navigate to the project directory**:
+Batch push items into the array.
 
-   ```bash
-   cd your-package-name
-   ```
-
-3. **Install dependencies**:
-
-   ```bash
-   npm install
-   ```
-
-4. **Start Development**:
-
-   ```bash
-   npm run dev
-   ```
-
-   This will watch for changes in your `src` directory and rebuild as necessary.
-
-5. **Build for Production**:
-
-   ```bash
-   npm run build
-   ```
-
-   This will generate the necessary files in the `dist` directory, ready for publishing to npm.
-
-## Scripts
-
-- `npm run build`: Produces production version of your library.
-- `npm run dev`: Runs the library in development mode with watch for changes.
-- `npm run test`: Run your tests using Jest.
-- `npm run lint`: Lints your codebase using ESLint.
-
-## Customizing the Template
-
-To adapt this template for your own use, follow these customization steps:
-
-1. **General Details**:
-   - Update the `name`, `description`, and `version` in `package.json`.
-   - Modify the `author` field with your own name and contact details in `package.json`.
-   - If you have a different license preference, update the `license` field and provide the corresponding LICENSE file.
-
-2. **Repository Details**:
-   - Adjust the `repository`, `bugs`, and `homepage` URLs in `package.json` to point to your own repository.
-
-3. **Funding & Support**:
-   - If you have a different funding platform or URL, update the `funding` field in `package.json`.
-
-4. **Contributors**:
-   - Update the `contributors` field if your project has more contributors or if you want to provide more detailed contact information.
-
-## Publishing to npm
-
-1. **Login to npm**:
-
-   If you haven't logged in to npm in your terminal or if you're new to npm, run:
-
-   ```bash
-   npm login
-   ```
-
-   Follow the prompts to enter your username, password, and email address.
-
-2. **Publishing**:
-
-   Before publishing, ensure you've built the package for production using:
-
-   ```bash
-   npm run build
-   ```
-
-   Then, simply publish using:
-
-   ```bash
-   npm publish
-   ```
-
-3. **Understanding the Publishing Process**:
-
-   - Thanks to the `files` array in `package.json`, only the `dist` directory and the `README.md` file will be uploaded to npm. This ensures a lightweight package for your users.
-   - Your `.npmignore` file can further refine what gets excluded from the npm package.
-
-4. **Versioning**:
-
-   Always update the version number in `package.json` before publishing a new release. Use [semantic versioning](https://semver.org/) to clearly communicate changes. Semantic versioning (or SemVer) is a versioning scheme where each version number consists of three parts: `MAJOR.MINOR.PATCH`, indicating breaking changes, additive changes, and bug fixes respectively.
-
-## Type Declarations
-
-The magic behind the type declarations in this setup is the combination of TypeScript and the build tools:
-
-- The script `"build:types": "tsc --emitDeclarationOnly"` in `package.json` is responsible for generating type declaration files without emitting JavaScript code. This means when you run the build script, TypeScript will automatically generate the type declarations for your package.
-  
-- These type declarations are bundled in the `dist` directory, which gets uploaded to npm when you publish. This ensures that anyone installing your package also gets the type declarations, making it easier to use your package in TypeScript projects.
-
-## Importing and Using the Your Package Once Published
-
-### Installing the Package
-
-First, you need to install the package from npm:
-
-```bash
-npm install package-name
-```
-
-or with Yarn:
-
-```bash
-yarn add package-name
-```
-
-### Using the Package in Your Code
-
-The package provides both default and named exports for maximum flexibility. Here's how you can import and use them:
-
-#### Importing the Default Export
-
-The default export is the primary functionality provided by the package. To import and use it:
+##### Example
 
 ```typescript
-import defaultExport from 'package-name';
-
-// Use the defaultExport in your code
-defaultExport();
+const magicArray = createMagicArray<number>();
+magicArray.batchPush([4, 5, 6]);
 ```
 
-#### Importing Types or Other Named Exports
+#### `search(queryFn: (item: T) => boolean): T[]`
 
-If you need any specific types or utilities provided by the package, you can import them alongside the default export:
+Search the array using a query function.
+
+##### Search Example
 
 ```typescript
-import defaultExport, { SomeType } from 'package-name';
-
-// Using the type in your code
-const someVariable: SomeType = {
-  // ...your object structure here
-};
+const magicArray = createMagicArray<number>();
+const result = magicArray.search(item => item > 2);
 ```
 
-Or, if you only need the named exports:
+#### `setValidation(fn: ValidationFunction<T>): void`
+
+Set a validation function to filter items.
+
+##### setValidation Example
 
 ```typescript
-import { SomeType } from 'package-name';
-
-// Using the type in your code
-const someVariable: SomeType = {
-  // ...your object structure here
-};
+const magicArray = createMagicArray<number>();
+magicArray.setValidation(item => item > 0);
 ```
 
-Feel free to adjust the above section to better fit the specifics of your package and its exports.
+#### `serialize(): string`
 
-## Contributing
+Serialize the current array into a JSON string.
 
-If you find any problems, please [open an issue](https://github.com/dougwithseismic/template-ts-npm-package/issues) or submit a fix as a pull request.
+##### serialize Example
 
-## Support
+```typescript
+const magicArray = createMagicArray<number>();
+const jsonString = magicArray.serialize();
+```
 
-Like the project? ⭐ Star the repository to show support or [support the author directly](https://gimme.fan/@dougiesilkstone).
+#### `deserialize(jsonString: string): void`
 
-## Author
+Deserialize a JSON string into the current array.
 
-- [Doug Silkstone](https://twitter.com/dougiesilkstone)
+##### Example
+
+```typescript
+const magicArray = createMagicArray<number>();
+magicArray.deserialize(jsonString);
+```
+
+#### `getItems(): T[]`
+
+Retrieve a shallow copy of the items in the array.
+
+##### Example
+
+```typescript
+const magicArray = createMagicArray<number>();
+const items = magicArray.getItems();
+```
+
+### Standard Methods
+
+The library supports all standard JavaScript array methods, enhancing them with additional capabilities.
+
+## History Actions
+
+MagicArray comes with a history system to track changes and enable navigation through past states. Here are the functionalities:
+
+### `previous(): T[]`
+
+Navigate to the previous state in history.
+
+#### Example
+
+```typescript
+const prevState = magicArray.history.previous();
+```
+
+### `next(): T[]`
+
+Navigate to the next state in history.
+
+#### Example
+
+```typescript
+const nextState = magicArray.history.next();
+```
+
+### `clean(): void`
+
+Clean the history by resetting it.
+
+#### Example
+
+```typescript
+magicArray.history.clean();
+```
+
+#### `jump(number: number): T[]`
+
+Jump by a specified number of steps in the history.
+
+#### Example
+
+```typescript
+magicArray.history.jump(2);
+```
+
+### `goTo(index: number): T[]`
+
+Go to a specific index in the history.
+
+#### Example
+
+```typescript
+magicArray.history.goTo(5);
+```
+
+### `saveCheckpoint(label?: string): void`
+
+Save a checkpoint with an optional label.
+
+#### Example
+
+```typescript
+magicArray.history.saveCheckpoint('before-change');
+```
+
+### `restoreCheckpoint(label: string): void`
+
+Restore a checkpoint by its label.
+
+#### Example
+
+```typescript
+magicArray.history.restoreCheckpoint('before-change');
+```
+
+### `listCheckpoints(): Checkpoint<T>[]`
+
+List all checkpoints.
+
+#### Example
+
+```typescript
+const checkpoints = magicArray.history.listCheckpoints();
+```
+
+### `toJSON(): string`
+
+Convert the history to a JSON string.
+
+#### Example
+
+```typescript
+const jsonHistory = magicArray.history.toJSON();
+```
+
+### `toCSV(delimiter: string): string`
+
+Convert the history to a CSV string with a given delimiter.
+
+#### Example
+
+```typescript
+const csvHistory = magicArray.history.toCSV(';');
+```
+
+### `import(serialized: string): void`
+
+Import a serialized string to replace the current history.
+
+#### Example
+
+```typescript
+magicArray.history.import(serializedHistory);
+```
+
+### `limit(size: number): void`
+
+Limit the size of the history, removing older entries if necessary.
+
+#### Example
+
+```typescript
+magicArray.history.limit(10);
+```
+
+### `hasChanges(): boolean`
+
+Check if there are any changes in the current state compared to the history.
+
+#### Example
+
+```typescript
+const changes = magicArray.history.hasChanges();
+```
+
+### `subscribe(listener: HistoryChangeListener): void`
+
+Subscribe a listener to changes in the history.
+
+#### Example
+
+```typescript
+magicArray.history.subscribe(listener);
+```
+
+### `undo(times?: number): void`
+
+Undo a specified number of changes, or one change if no number is provided.
+
+#### Example
+
+```typescript
+magicArray.history.undo(3);
+```
+
+### `redo(times?: number): void`
+
+Redo a specified number of changes, or one change if no number is provided.
+
+#### Example
+
+```typescript
+magicArray.history.redo(3);
+```
+
+## Usage Examples
+
+### For Game Development
+
+Managing game states and allowing players to undo and redo actions:
+
+```typescript
+const gameState = createMagicArray<Game>();
+gameState.magicArray.history.saveCheckpoint('level-1');
+// Player makes moves...
+gameState.magicArray.history.undo(); // Undo last move
+```
+
+### For Task Management
+
+Managing tasks in a project with the ability to track the changes, undo/redo task updates, and save checkpoints:
+
+```typescript
+const tasks = createMagicArray<Task>();
+tasks.batchPush([
+  { title: 'Write code', status: 'done' },
+  { title: 'Write tests', status: 'in-progress' }
+]);
+tasks.magicArray.history.saveCheckpoint('initial-tasks');
+tasks.search(task => task.status === 'in-progress'); // Search tasks in progress
+tasks.magicArray.history.undo(); // Undo the last change
+```
+
+### For User Profile Management
+
+Handling user profiles and tracking changes, making it easy to revert to previous states:
+
+```typescript
+const users = createMagicArray<UserProfile>();
+users.setValidation(user => user.age > 18); // Validate user's age
+users.batchPush(newUserProfiles);
+users.magicArray.history.saveCheckpoint('after-new-users');
+// Make updates...
+users.magicArray.history.restoreCheckpoint('after-new-users'); // Restore to previous state
+```
+
+### For Shopping Cart Management
+
+Manipulating shopping cart items, searching for products, and maintaining history checkpoints:
+
+```typescript
+const cart = createMagicArray<Product>();
+cart.batchPush(selectedProducts);
+cart.search(product => product.category === 'electronics'); // Search for electronics
+cart.magicArray.history.saveCheckpoint('after-adding-electronics');
+// Remove some items...
+cart.magicArray.history.restoreCheckpoint('after-adding-electronics'); // Restore to previous state
+```
+
+### For Timeline Creation in Social Media
+
+Building a timeline for social media applications, with features to go back and forth through user posts and actions:
+
+```typescript
+const timeline = createMagicArray<Post>();
+timeline.batchPush(newPosts);
+timeline.history.next(); // Navigate to the next state in history
+timeline.history.previous(); // Navigate to the previous state in history
+timeline.history.saveCheckpoint('user-login'); // Save a specific point in time
+```
+
+### For Health Data Tracking
+
+Tracking patients' health data with the ability to analyze, search, and maintain historical records:
+
+```typescript
+const patientData = createMagicArray<HealthRecord>();
+patientData.search(record => record.condition === 'diabetes'); // Search for diabetic patients
+patientData.history.saveCheckpoint('end-of-year'); // Save end-of-year records
+// Analyzing data...
+patientData.history.restoreCheckpoint('end-of-year'); // Restore to end-of-year state
+```
+
+### For Configuration Management
+
+Saving and restoring configurations:
+
+```typescript
+const config = createMagicArray<Config>();
+config.magicArray.history.saveCheckpoint('stable');
+// Make changes...
+config.magicArray.history.restoreCheckpoint('stable'); // Restore to stable
+```
+
+### Obstacle Avoidance and Path Planning for Drone Swarms
+
+Planning and adjusting paths for a swarm of drones to avoid obstacles, with the ability to revert to previous paths:
+
+```typescript
+const obstacleAvoidancePaths = createMagicArray<Path>();
+obstacleAvoidancePaths.setValidation(path => !path.hasObstacle); // Validate paths without obstacles
+obstacleAvoidancePaths.batchPush(plannedPaths);
+obstacleAvoidancePaths.history.saveCheckpoint('obstacle-free');
+// Replan paths if new obstacles are detected...
+obstacleAvoidancePaths.history.restoreCheckpoint('obstacle-free'); // Revert to obstacle-free paths
+```
+
+#### Synchronized Movement of Drone Swarm
+
+Synchronizing the movement of a swarm of drones by batch updating waypoints and saving key checkpoints:
+
+```typescript
+const swarmWaypoints = createMagicArray<DroneSwarm>();
+swarmWaypoints.batchPush(swarmFormation1);
+swarmWaypoints.history.saveCheckpoint('formation-1');
+swarmWaypoints.batchPush(swarmFormation2);
+swarmWaypoints.history.saveCheckpoint('formation-2');
+// Transition between formations...
+swarmWaypoints.history.restoreCheckpoint('formation-1'); // Restore to formation 1
+```
+
+... You get the picture.
+
+## License
+
+MagicArray is [MIT licensed](LICENSE).
